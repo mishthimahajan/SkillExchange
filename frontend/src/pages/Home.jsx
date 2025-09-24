@@ -4,7 +4,7 @@ import React from 'react';
 function Home() {
   return (
     <div
-      className="min-h-screen flex items-center justify-center text-center text-white px-4"
+      className=" relative min-h-screen flex items-center justify-center text-center text-white px-4"
       
     >
        <img
@@ -13,7 +13,7 @@ function Home() {
         className="absolute inset-0 w-full h-full object-cover opacity-10 mx-auto"
       />
       <div className="bg-black-50 bg-opacity-50 p-8 rounded-lg max-w-xl">
-        <h1 className="texbhht-4xl font-bold mb-4">Welcome to Skill Exchange</h1>
+        <h1 className="text-4xl font-bold mb-4">Welcome to Skill Exchange</h1>
         <p className="mb-6 text-lg">
           Learn new skills, share your expertise, and connect with a community of passionate learners.
         </p>
