@@ -8,7 +8,7 @@ function Navigation() {
   const location = useLocation();
 
   const links = [
-    { name: 'Home', path: '/Home', icon: <FaHome /> },
+    { name: 'Home', path: '/', icon: <FaHome /> },
     { name: 'Profile', path: '/profile', icon: <FaUser /> },
     { name: 'Settings', path: '/settings', icon: <FaCog /> },
     { name: 'Login', path: '/login', icon: <FaSignInAlt /> },

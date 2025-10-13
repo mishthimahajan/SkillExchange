@@ -10,18 +10,18 @@
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import { StrictMode } from 'react';
+import { AuthProvider } from './store/Auth';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <StrictMode>
+    <AuthProvider>
   <BrowserRouter>
     <App />
   </BrowserRouter>
+  </AuthProvider>
+  </StrictMode>
 );
 
-//     <BrowserRouter>
-//     <App />
-//     </BrowserRouter>
-    
-//   </StrictMode>,
-// )
 

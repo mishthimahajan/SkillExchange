@@ -172,6 +172,58 @@
 
 // export default App;
 
+// import React from 'react';
+// import { Routes, Route } from 'react-router-dom';
+// import './App.css';
+// import Home from './pages/Home';
+// import Profile from './pages/Profile';
+// import Settings from './pages/Settings';
+// import Login from './pages/Login';
+// import Register from './pages/Register';
+// import Navbar from "./components/Navigation";
+
+// function App() {
+//   return (
+//     <>
+//       <Navbar /> 
+//       <Routes>
+//         <Route path="/" element={<Home />} />
+//         <Route path="/profile" element={<Profile />} />
+//         <Route path="/settings" element={<Settings />} />
+//         <Route path="/login" element={<Login />} />
+//         <Route path="/register" element={<Register />} />
+//       </Routes>
+//     </>
+//   );
+// }
+
+// export default App;
+
+// import { Routes, Route } from "react-router-dom";
+// import Home from "./pages/Home";
+// import Profile from "./pages/Profile";
+// import Settings from "./pages/Settings";
+// import Login from "./pages/Login";
+// import Register from "./pages/Register";
+
+// import Layout from "./Layout";
+
+// function App() {
+//   return (
+//     <>
+//       <Layout/>
+//       <Routes>
+//         <Route path="/" element={<Home />} />
+//         <Route path="/profile" element={<Profile />} />
+//         <Route path="/settings" element={<Settings />} />
+//         <Route path="/login" element={<Login />} />
+//         <Route path="/register" element={<Register />} />
+//       </Routes>
+//     </>
+//   );
+// }
+
+// export default App;
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
@@ -181,17 +233,28 @@ import Settings from './pages/Settings';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Navbar from "./components/Navigation";
+import Layout from './Layout';
+import Protected from './components/Protected';
+import Explore from "./pages/Explore.jsx";
+import AllUsers from './pages/Explore.jsx';
+
 
 function App() {
   return (
     <>
-      <Navbar /> 
+      <Layout/> 
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/" element={<Home />} ></Route>
+       <Route path='/profile' element={<Protected><Profile/></Protected>}></Route>
         <Route path="/settings" element={<Settings />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        {/* <Route path="/explore" element={<Explore />} /> */}
+        <Route path='/explore' element={<Protected><Explore/></Protected>}></Route>
+        {/* <Route path='/allusers'element={<AllUsers/>}></Route> */}
+        {/* <Route path="/explore" element={ <Protected> <Explore /> </Protected> } ></Route> */}
+
+
       </Routes>
     </>
   );
@@ -224,9 +287,6 @@ export default App;
 // }
 
 // export default App;
-
-
-
 
 
 
