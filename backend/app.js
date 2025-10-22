@@ -102,7 +102,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // ✅ Routes
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/api", require("./routes/index"));
+app.use("/", require("./routes/index"));
 // app.use("/api", indexRouter); // all your register/login/profile/explore routes
 // app.use("/api/users", usersRouter);
 app.use("/uploads", express.static("uploads"));

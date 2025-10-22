@@ -180,29 +180,67 @@ router.post("/login",async(req,res) => {
 //     res.status(500).json({ success: false, message: 'Server error' });
 //   }
 // });
-router.put("/add-skill", isLoggedin, upload.single("profileImage") ,async (req, res) => {
-  try {
-    const { skills } = req.body;
-    const {profileImage}= req.file?req.body.filename:null;
+// router.put("/add-skill", isLoggedin, upload.single("profileImage") ,async (req, res) => {
+//   try {
+//     const { skills } = req.body;
+//     const {profileImage}= req.file?req.body.filename:null;
 
-    console.log("Received skills:", skills);
-    console.log("Logged-in user:", req.user.email);
-    if (!skills || !Array.isArray(skills) || skills.length === 0) {
-      return res.status(400).json({ error: "Skills are required" });
+//     console.log("Received skills:", skills);
+//     console.log("Logged-in user:", req.user.email);
+//     if (!skills || !Array.isArray(skills) || skills.length === 0) {
+//       return res.status(400).json({ error: "Skills are required" });
+//     }
+
+//     const user = await userModel.findOneAndUpdate(
+//       { email: req.user.email },
+//       { $addToSet: { skills: { $each: skills } } },
+//       {profileImage:profileImage},
+//       { new: true }
+//     );
+
+//     if (!user) {
+//       return res.status(404).json({ error: "User not found" });
+//     }
+
+//     res.status(200).json({ message: "Skills added successfully", user });
+//   } catch (err) {
+//     console.error("Error adding skill:", err);
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+router.post("/add-skill", isLoggedin, upload.single("profileImage"), async (req, res) => {
+  try {
+    const userEmail = req.user.email;
+    let { skills } = req.body;
+
+    // Parse skills if they are sent as JSON string
+    let skillArray = [];
+    try {
+      skillArray = JSON.parse(skills);
+    } catch {
+      skillArray = Array.isArray(skills) ? skills : [skills];
+    }
+
+    // Build update object
+    const updateData = { $addToSet: { skills: { $each: skillArray } } };
+
+    // ✅ Add image path if file uploaded
+    if (req.file) {
+      updateData.profileImage = req.file.path;
     }
 
     const user = await userModel.findOneAndUpdate(
-      { email: req.user.email },
-      { $addToSet: { skills: { $each: skills } } },
-      {profileImage:profileImage},
+      { email: userEmail },
+      updateData,
       { new: true }
     );
 
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
+    if (!user) return res.status(404).json({ error: "User not found" });
 
-    res.status(200).json({ message: "Skills added successfully", user });
+    res.status(200).json({
+      message: "Profile updated successfully",
+      user,
+    });
   } catch (err) {
     console.error("Error adding skill:", err);
     res.status(500).json({ error: err.message });

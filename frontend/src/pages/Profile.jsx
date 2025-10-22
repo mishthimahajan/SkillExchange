@@ -628,7 +628,7 @@ function Profile() {
       .filter((s) => s);
 
     const res = await fetch(`http://localhost:3000/add-skill`, {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
