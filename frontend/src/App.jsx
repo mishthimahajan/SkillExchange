@@ -237,6 +237,7 @@ import Layout from './Layout';
 import Protected from './components/Protected';
 import Explore from "./pages/Explore.jsx";
 import AllUsers from './pages/Explore.jsx';
+import MatchPage from './pages/Match.jsx';
 
 
 function App() {
@@ -250,7 +251,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         {/* <Route path="/explore" element={<Explore />} /> */}
-        <Route path='/explore' element={<Protected><Explore/></Protected>}></Route>
+        <Route path='/explore' element={<Protected><Explore /></Protected>}></Route>
+        <Route path='/match' element={<MatchPage/>}></Route>
         {/* <Route path='/allusers'element={<AllUsers/>}></Route> */}
         {/* <Route path="/explore" element={ <Protected> <Explore /> </Protected> } ></Route> */}
 

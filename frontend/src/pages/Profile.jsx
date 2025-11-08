@@ -588,7 +588,7 @@
 import { useState } from "react";
 import { FaUser, FaEnvelope, FaPhone, FaInfoCircle } from "react-icons/fa";
 import { useAuth } from "../store/Auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Profile() {
   const [profile, setProfile] = useState({
@@ -597,6 +597,7 @@ function Profile() {
     email: "",
     phone: "",
     skills: "",
+    skillsToLearn: "",
     image: null,
   });
 
@@ -622,7 +623,14 @@ function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-    let skillArray = profile.skills
+
+    // Convert comma-separated text into arrays
+    const skillArray = profile.skills
+      .split(",")
+      .map((s) => s.trim())
+      .filter((s) => s);
+
+    const skillsToLearnArray = profile.skillsToLearn
       .split(",")
       .map((s) => s.trim())
       .filter((s) => s);
@@ -633,13 +641,15 @@ function Profile() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ skills: skillArray }),
+      body: JSON.stringify({
+        skills: skillArray,
+        skillsToLearn: skillsToLearnArray,
+      }),
     });
 
     const res_data = await res.json();
-    console.log(res_data);
+    console.log("Profile updated:", res_data);
   };
-
 
   const handleLogout = () => {
     logoutUser();
@@ -661,6 +671,7 @@ function Profile() {
           </button>
         </div>
 
+        {/* Profile Image */}
         <div className="flex flex-col items-center mt-2">
           <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-indigo-500 shadow-md">
             <img
@@ -680,6 +691,7 @@ function Profile() {
           </label>
         </div>
 
+        {/* Profile Form */}
         <form onSubmit={handleSubmit} className="space-y-3">
           <div className="relative">
             <FaUser className="absolute top-3 left-3 text-indigo-600" />
@@ -732,11 +744,12 @@ function Profile() {
             />
           </div>
 
+          {/* Skills Section */}
           <div className="relative">
             <FaInfoCircle className="absolute top-3 left-3 text-indigo-600" />
             <textarea
               name="skills"
-              placeholder="Add your skills (comma separated)"
+              placeholder="Add your current skills (comma separated)"
               value={profile.skills}
               onChange={handleChange}
               rows="2"
@@ -744,18 +757,42 @@ function Profile() {
             />
           </div>
 
+          {/* Skills to Learn Section */}
+          <div className="relative">
+            <FaInfoCircle className="absolute top-3 left-3 text-indigo-600" />
+            <textarea
+              name="skillsToLearn"
+              placeholder="Skills you want to learn (comma separated)"
+              value={profile.skillsToLearn}
+              onChange={handleChange}
+              rows="2"
+              className="p-2 pl-9 rounded-md border border-gray-300 w-full focus:ring-2 focus:ring-indigo-400 outline-none text-sm resize-none"
+            />
+          </div>
+
+          {/* <Link
+          to="/match"
+          > */}
           <button
             type="submit"
             className="w-full bg-indigo-600 text-white py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-transform hover:scale-105"
           >
             Update Profile
           </button>
+          {/* </Link> */}
         </form>
+        <button
+         
+          className="w-full bg-indigo-600 text-white py-2 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-transform hover:scale-105"
+        >
+          <Link to="/match"> Find Teacher and Learners</Link>
+        </button>
       </div>
     </div>
   );
 }
 
 export default Profile;
+
 
 

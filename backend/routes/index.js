@@ -6,6 +6,7 @@ const isLoggedin = require("../middleware/isloggedin");
 const jwt = require("jsonwebtoken");
 const Path = require("path")
 var router = express.Router();
+const axios =  require("axios")
 
 
 const multer = require("multer")
@@ -211,18 +212,27 @@ router.post("/login",async(req,res) => {
 router.post("/add-skill", isLoggedin, upload.single("profileImage"), async (req, res) => {
   try {
     const userEmail = req.user.email;
-    let { skills } = req.body;
+    let { skills, skillsToLearn } = req.body;
+   
 
     // Parse skills if they are sent as JSON string
     let skillArray = [];
+    let skillsToLearnArray = [];
     try {
       skillArray = JSON.parse(skills);
+      skillsToLearnArray = JSON.parse(skillsToLearn);
     } catch {
       skillArray = Array.isArray(skills) ? skills : [skills];
+      skillsToLearnArray = Array.isArray(skillsToLearn) ? skillsToLearn : [skillsToLearn];
     }
 
     // Build update object
-    const updateData = { $addToSet: { skills: { $each: skillArray } } };
+     const updateData = {
+        $addToSet: {
+          skills: { $each: skillArray },
+          skillsToLearn: { $each: skillsToLearnArray },
+        },
+      };
 
     // ✅ Add image path if file uploaded
     if (req.file) {
@@ -311,6 +321,28 @@ router.post("/change-password", isLoggedin, async (req, res) => {
 //     res.status(500).json({ success: false, message: "Server error" });
 //   }
 // });
+
+// ML ROUTES 
+router.get("/recommend/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const users = await userModel.find();
+    const targetUser = await userModel.findById(userId);
+
+    if (!targetUser) return res.status(404).json({ error: "User not found" });
+
+    // send data to Python ML service
+    const response = await axios.post("http://localhost:5000/recommend", {
+      users,
+      targetUser,
+    });
+
+    res.json({ recommendations: response.data.recommendations });
+  } catch (err) {
+    console.error("Error in recommend route:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 
 
