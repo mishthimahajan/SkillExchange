@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
-mongoose.connect("mongodb://127.0.0.1:27017/SkillExchange")
+require("dotenv).config();
+const DB_URL = process.env.MONGO_URI;
+mongoose.connect(db, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
 const userSchema = new mongoose.Schema({
   fullName: {
     type: String,
