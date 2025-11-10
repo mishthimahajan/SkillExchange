@@ -86,7 +86,7 @@ const app = express();
 // ✅ Allow requests from React frontend (Vite runs on 5173)
 app.use(
   cors({
-    origin: "http://localhost:5173", // no trailing slash
+    origin: "https://skill-exchange-lac.vercel.app", // no trailing slash
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
   })
