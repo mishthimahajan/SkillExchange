@@ -627,7 +627,7 @@ function Profile() {
       .map((s) => s.trim())
       .filter((s) => s);
 
-    const res = await fetch(`http://localhost:3000/add-skill`, {
+    const res = await fetch(`https://skillexchange-2cap.onrender.com/add-skill`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
