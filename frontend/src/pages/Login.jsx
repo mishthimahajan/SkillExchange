@@ -342,10 +342,7 @@ const {storeTokenInLS} = useAuth();
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body:JSON.stringify(formData)
-  //      body: JSON.stringify({
-  //   username: formData.username,
-  //   password: formData.password,
-  // }),
+  
 });
 console.log(res);
       // Get raw text first to avoid JSON parse errors
@@ -360,9 +357,7 @@ console.log(res);
       }
 
       if (res.ok) {
-        // save token if needed
-        // localStorage.setItem("token", data.token);
-        // navigate to main page
+       
         storeTokenInLS(data.token);
         navigate("/profile"); // <-- change this to wherever you want
       } else {
