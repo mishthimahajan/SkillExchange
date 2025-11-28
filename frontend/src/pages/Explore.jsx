@@ -8,7 +8,7 @@ function Explore() {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem("token"); // For protected route
-        const res = await fetch("http://localhost:3000/findallUser", {
+        const res = await fetch("https://skillexchange-2cap.onrender.com/findallUser", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
